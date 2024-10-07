@@ -16,7 +16,7 @@ const  Navigate = () => {
             <Link to="/" style={{textDecoration:"none",  fontSize:"120%", color:"white"}}>Home</Link>
           </li>
           <li style={{float:"right", display:"block", textAlign:"center", padding:"14px 16px", textDecoration:"none"}}>
-            <Link to="shopping-list" style={{textDecoration:"none",  fontSize:"120%", color:"white"}}>Shopping List</Link>
+            <Link to="/ShoppingLists" style={{textDecoration:"none",  fontSize:"120%", color:"white"}}>Shopping List</Link>
           </li>
         </ul>
       </nav>
@@ -25,3 +25,4 @@ const  Navigate = () => {
 };
 
 export default Navigate;
+

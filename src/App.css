@@ -10,74 +10,50 @@ html,body,#root{
   height: 100%;
 }
 
-body{
-  padding-bottom: 100px;
-  margin: 0
-}
+/* src/components/SignUp.css */
 
-.container {
+.signup-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
-}
-
-.header {
-  background-color: #555;
-  color: white;
-  text-align: center;
+  background: rgba(255, 255, 255, 0.5); /* Glassy background */
+  backdrop-filter: blur(10px); /* Blur effect */
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   padding: 20px;
-  font-size: 2em;
 }
 
-.main {
-  flex-grow: 1;
+.signup-form {
   display: flex;
+  flex-direction: column;
+  width: 300px;
 }
 
-.sidebar {
-  width: 25%;
-  background-color: #ddd;
-  padding: 20px;
-}
-
-.content {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: #f4f4f4;
-}
-
-.footer {
-  background-color: #555;
-  color: white;
-  text-align: center;
+.signup-form input {
+  margin: 10px 0;
   padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-.sidebar a {
-  display: block;
-  margin-bottom: 10px;
-  color: blue;
-  text-decoration: none;
-}
-
-.sidebar a:hover {
-  text-decoration: underline;
-}
-
-.content h2 {
-  font-size: 2em;
-  margin-bottom: 10px;
-}
-
-.add-category-form input, .add-category-form button {
+.signup-form button {
   padding: 10px;
-  margin-top: 5px;
-  font-size: 1em;
-}
-
-.add-category-form button {
-  background-color: #555;
+  background-color: #007bff;
   color: white;
   border: none;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
+}
+
+.signup-form button:disabled {
+  background-color: #007bff88; /* Dimmed button when loading */
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
 }
