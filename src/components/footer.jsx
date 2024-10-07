@@ -13,7 +13,7 @@ function Footer() {
     zIndex: 10
     }}>
           <p className="footer-text" style={{ margin: 0, textAlign: "center", lineHeight: 1.5}}>
-            Footer format : © API Nosihle Mthembu API Workshop. All rights reserved.
+            Footer format : © Task 10 Shopping List Nosihle Mthembu API Workshop. All rights reserved.
           </p>
         </footer>
       </>
