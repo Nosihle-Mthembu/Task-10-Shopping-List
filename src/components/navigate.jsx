@@ -13,10 +13,10 @@ const  Navigate = () => {
             <Link to="/SignUp" style={{textDecoration:"none",  fontSize:"120%", color:"white"}}>Sign Up</Link>
           </li>
           <li style={{float:"right", display:"block", textAlign:"center", padding:"14px 16px", textDecoration:"none"}}>
-            <Link to="/" style={{textDecoration:"none",  fontSize:"120%", color:"white"}}>Home</Link>
+            <Link to="/ShoppingList" style={{textDecoration:"none",  fontSize:"120%", color:"white"}}>Shopping List</Link>
           </li>
           <li style={{float:"right", display:"block", textAlign:"center", padding:"14px 16px", textDecoration:"none"}}>
-            <Link to="/ShoppingLists" style={{textDecoration:"none",  fontSize:"120%", color:"white"}}>Shopping List</Link>
+            <Link to="/" style={{textDecoration:"none",  fontSize:"120%", color:"white"}}>Home</Link>
           </li>
         </ul>
       </nav>

@@ -22,7 +22,7 @@ const SignIn = () => {
     e.preventDefault();
     const action = await dispatch(login(formData));
     if (login.fulfilled.match(action)) {
-      navigate('/ShoppingLists'); // Redirect to Shopping List page on successful login
+      navigate('/ShoppingList'); // Redirect to Shopping List page on successful login
     }
   };
 

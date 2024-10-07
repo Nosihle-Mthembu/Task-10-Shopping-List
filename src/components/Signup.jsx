@@ -31,29 +31,113 @@ const SignUp = () => {
     }, 3000); // Clear the notification after 3 seconds
   };
 
+  const styles = {
+    container: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      background: 'linear-gradient(to right, #3a6073, #a8c0b4)', // Muted gradient
+    },
+    formContainer: {
+      background: 'rgba(255, 255, 255, 0.9)', // Lighter background for form
+      borderRadius: '10px',
+      padding: '20px',
+      width: '300px',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+      backdropFilter: 'blur(5px)',
+    },
+    header: {
+      textAlign: 'center',
+      color: '#2c3e50', // Darker text color for better readability
+      marginBottom: '20px',
+    },
+    input: {
+      width: '100%',
+      padding: '10px',
+      margin: '10px 0',
+      borderRadius: '5px',
+      border: '1px solid #bdc3c7', // Light border
+      outline: 'none',
+      background: 'rgba(233, 236, 239, 0.8)', // Slightly darker input background
+      color: '#34495e', // Darker input text
+    },
+    button: {
+      width: '100%',
+      padding: '10px',
+      borderRadius: '5px',
+      border: 'none',
+      background: '#5c92a1', // Soft blue for button
+      color: '#fff',
+      cursor: 'pointer',
+      fontSize: '16px',
+      transition: 'background 0.3s',
+    },
+    error: {
+      color: 'red',
+      textAlign: 'center',
+      marginTop: '10px',
+    },
+  };
+
   return (
-    <div style={{ padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
-        <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-        <input type="tel" name="number" placeholder="Phone Number" value={formData.number} onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-        <button type="submit">Sign Up</button>
-      </form>
-      {notification && (
-        <div style={{
-          marginTop: '10px',
-          padding: '10px',
-          backgroundColor: '#d4edda',
-          color: '#155724',
-          border: '1px solid #c3e6cb',
-          borderRadius: '5px'
-        }}>
-          {notification}
-        </div>
-      )}
+    <div style={styles.container}>
+      <div style={styles.formContainer}>
+        <h2 style={styles.header}>Sign Up</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            style={styles.input}
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            style={styles.input}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            style={styles.input}
+          />
+          <input
+            type="tel"
+            name="number"
+            placeholder="Phone Number"
+            value={formData.number}
+            onChange={handleChange}
+            required
+            style={styles.input}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            style={styles.input}
+          />
+          <button type="submit" style={styles.button}>Sign Up</button>
+        </form>
+        {notification && (
+          <div style={styles.error}>
+            {notification}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

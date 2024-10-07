@@ -5,6 +5,7 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Home from './components/Home';
 import Layout from './components/Layout';
+import ShoppingList from './components/ShoppingLists';
 import NoPage from './components/NoPage';
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/signin" element={<SignIn />} />
+                    <Route path="/shoppingList" element={<ShoppingList />} />
                     <Route path="*" element={<NoPage />} />
                 </Routes>
             </Layout>
