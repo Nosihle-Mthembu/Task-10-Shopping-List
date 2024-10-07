@@ -28,7 +28,7 @@ const SignUp = () => {
     }
     setTimeout(() => {
       setNotification('');
-    }, 3000); // Clear the notification after 3 seconds
+    }, 3000);
   };
 
   const styles = {
@@ -37,10 +37,10 @@ const SignUp = () => {
       justifyContent: 'center',
       alignItems: 'center',
       height: '100vh',
-      background: 'linear-gradient(to right, #3a6073, #a8c0b4)', // Muted gradient
+      background: 'linear-gradient(to right, #3a6073, #a8c0b4)',
     },
     formContainer: {
-      background: 'rgba(255, 255, 255, 0.9)', // Lighter background for form
+      background: 'rgba(255, 255, 255, 0.9)',
       borderRadius: '10px',
       padding: '20px',
       width: '300px',
@@ -49,7 +49,7 @@ const SignUp = () => {
     },
     header: {
       textAlign: 'center',
-      color: '#2c3e50', // Darker text color for better readability
+      color: '#2c3e50',
       marginBottom: '20px',
     },
     input: {
@@ -57,24 +57,24 @@ const SignUp = () => {
       padding: '10px',
       margin: '10px 0',
       borderRadius: '5px',
-      border: '1px solid #bdc3c7', // Light border
+      border: '1px solid #bdc3c7', 
       outline: 'none',
-      background: 'rgba(233, 236, 239, 0.8)', // Slightly darker input background
-      color: '#34495e', // Darker input text
+      background: 'rgba(233, 236, 239, 0.8)', 
+      color: '#34495e',
     },
     button: {
       width: '100%',
       padding: '10px',
       borderRadius: '5px',
       border: 'none',
-      background: '#5c92a1', // Soft blue for button
+      background: '#5c92a1', 
       color: '#fff',
       cursor: 'pointer',
       fontSize: '16px',
       transition: 'background 0.3s',
     },
     error: {
-      color: 'red',
+      color: 'green',
       textAlign: 'center',
       marginTop: '10px',
     },

@@ -1,48 +1,43 @@
-// src/components/ShoppingList.jsx
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItem, deleteItem } from '../redux/shoppingListSlice'; // Ensure you create this slice
+import Categories from './CategoryList';
+import Items from './ListView';
 
 const ShoppingList = () => {
-    const [itemName, setItemName] = useState('');
-    const [quantity, setQuantity] = useState(1);
-    const shoppingList = useSelector((state) => state.shoppingList.items);
-    const dispatch = useDispatch();
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-    const handleAddItem = () => {
-        if (itemName) {
-            dispatch(addItem({ name: itemName, quantity }));
-            setItemName('');
-            setQuantity(1);
-        }
-    };
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
 
-    return (
-        <div>
-            <h2>Shopping List</h2>
-            <input
-                type="text"
-                value={itemName}
-                onChange={(e) => setItemName(e.target.value)}
-                placeholder="Item Name"
-            />
-            <input
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                placeholder="Quantity"
-            />
-            <button onClick={handleAddItem}>Add Item</button>
-            <ul>
-                {shoppingList.map((item) => (
-                    <li key={item.id}>
-                        {item.name} (x{item.quantity})
-                        <button onClick={() => dispatch(deleteItem(item.id))}>Remove</button>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  return (
+    <div style={styles.container}>
+      <div style={styles.categoriesSection}>
+        <Categories onCategoryClick={handleCategoryClick} />
+      </div>
+      <div style={styles.itemsSection}>
+        {selectedCategory ? (
+          <Items categoryName={selectedCategory} />
+        ) : (
+          <p>Select a category to view and add items</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '20px',
+  },
+  categoriesSection: {
+    flex: 1,
+    marginRight: '20px',
+  },
+  itemsSection: {
+    flex: 2,
+  },
 };
 
 export default ShoppingList;
