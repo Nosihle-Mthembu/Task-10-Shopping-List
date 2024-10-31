@@ -1,77 +1,173 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, deleteItem } from '../redux/shoppingListSlice';
+import { addItem, updateItem, deleteItem } from '../redux/shoppingListSlice';
 
-const Items = ({ categoryName }) => {
-  const dispatch = useDispatch();
-  const items = useSelector((state) => state.shoppingList.items[categoryName] || []);
-  const [newItem, setNewItem] = useState({
-    name: '',
-    quantity: '',
-    notes: ''
-  });
+const ListView = memo(({ categoryName, onClose }) => {
+const dispatch = useDispatch();
+const [newItem, setNewItem] = useState('');
+const [editingIndex, setEditingIndex] = useState(null);
+const [editedItem, setEditedItem] = useState('');
+const items = useSelector((state) =>
+state.shoppingList.lists.find((list) => list.category === categoryName)?.items || []
+);
 
-  const handleAddItem = () => {
-    if (newItem.name.trim() !== '') {
-      dispatch(addItem({ categoryName, item: newItem }));
-      setNewItem({ name: '', quantity: '', notes: '' });
-    }
-  };
-
-  const handleDeleteItem = (index) => {
-    dispatch(deleteItem({ categoryName, itemIndex: index }));
-  };
-
-  return (
-    <div style={styles.container}>
-      <h3>{categoryName} Items</h3>
-      <input
-        type="text"
-        value={newItem.name}
-        onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-        placeholder="Item Name"
-        style={styles.input}
-      />
-      <input
-        type="text"
-        value={newItem.quantity}
-        onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
-        placeholder="Quantity"
-        style={styles.input}
-      />
-      <input
-        type="text"
-        value={newItem.notes}
-        onChange={(e) => setNewItem({ ...newItem, notes: e.target.value })}
-        placeholder="Optional Notes"
-        style={styles.input}
-      />
-      <button onClick={handleAddItem} style={styles.button}>Add Item</button>
-
-      <ul style={styles.itemList}>
-        {items.map((item, index) => (
-          <li key={index} style={styles.item}>
-            <span>{item.name} - {item.quantity}</span>
-            <button onClick={() => handleDeleteItem(index)} style={styles.deleteButton}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+const handleAddItem = () => {
+if (newItem.trim()) {
+try {
+dispatch(addItem({ category: categoryName, item: newItem.trim() }));
+setNewItem('');
+} catch (error) {
+console.error(error);
+}
+}
 };
+
+const handleEditItem = (index) => {
+setEditingIndex(index);
+setEditedItem(items[index]);
+};
+
+const handleSaveItem = () => {
+if (editedItem.trim()) {
+try {
+dispatch(updateItem({ category: categoryName, itemIndex: editingIndex, newItem: editedItem.trim() }));
+setEditingIndex(null);
+setEditedItem('');
+} catch (error) {
+console.error(error);
+}
+}
+};
+
+const handleDeleteItem = (index) => {
+try {
+dispatch(deleteItem({ category: categoryName, itemIndex: index }));
+} catch (error) {
+console.error(error);
+}
+};
+
+return (
+<div style={styles.container}>
+<div style={styles.header}>
+<h3>Items in {categoryName}</h3>
+<button onClick={onClose} style={styles.closeButton}>Close List</button>
+</div>
+<ul style={styles.itemList}>
+{items.map((item, index) => (
+<li key={index} style={styles.itemCard}>
+{editingIndex === index ? (
+<>
+<input
+type="text"
+value={editedItem}
+onChange={(e) => setEditedItem(e.target.value)}
+style={styles.input}
+/>
+<button onClick={handleSaveItem} style={styles.saveButton}>Save</button>
+</>
+) : (
+<>
+<span style={styles.itemText}>{item}</span>
+<button onClick={() => handleEditItem(index)} style={styles.editButton}>Edit</button>
+<button onClick={() => handleDeleteItem(index)} style={styles.deleteButton}>Delete</button>
+</>
+)}
+</li>
+))}
+</ul>
+<div style={styles.addItemContainer}>
+<input
+type="text"
+value={newItem}
+onChange={(e) => setNewItem(e.target.value)}
+placeholder="Add a new item"
+style={styles.input}
+/>
+<button onClick={handleAddItem} style={styles.addButton}>Add Item</button>
+</div>
+</div>
+);
+});
 
 const styles = {
   container: {
     padding: '20px',
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#f2f2f2',
     borderRadius: '8px',
+    width: '300px',
+    margin: 'auto',
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  closeButton: {
+    padding: '5px 10px',
+    backgroundColor: '#d9534f',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  },
+  itemList: {
+    listStyleType: 'none',
+    padding: 0,
+    marginTop: '10px',
+  },
+  itemCard: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '10px',
+    backgroundColor: '#ffffff',
+    borderRadius: '5px',
+    marginBottom: '8px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  },
+  itemText: {
+    flex: 1,
+  },
+  editButton: {
+    padding: '5px',
+    backgroundColor: '#5bc0de',
+    color: '#fff',
+    border: 'none',
+    cursor: 'pointer',
+    borderRadius: '3px',
+    marginLeft: '5px',
+  },
+  deleteButton: {
+    padding: '5px',
+    backgroundColor: '#d9534f',
+    color: '#fff',
+    border: 'none',
+    cursor: 'pointer',
+    borderRadius: '3px',
+    marginLeft: '5px',
+  },
+  saveButton: {
+    padding: '5px',
+    backgroundColor: '#5cb85c',
+    color: '#fff',
+    border: 'none',
+    cursor: 'pointer',
+    borderRadius: '3px',
+    marginLeft: '5px',
+  },
+  addItemContainer: {
+    display: 'flex',
+    marginTop: '10px',
   },
   input: {
-    marginBottom: '10px',
     padding: '8px',
-    width: '80%',
+    flex: 1,
+    marginRight: '5px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
   },
-  button: {
+  addButton: {
     padding: '8px',
     backgroundColor: '#5c92a1',
     color: '#fff',
@@ -79,23 +175,6 @@ const styles = {
     cursor: 'pointer',
     borderRadius: '5px',
   },
-  itemList: {
-    listStyleType: 'none',
-    padding: 0,
-  },
-  item: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    margin: '5px 0',
-  },
-  deleteButton: {
-    backgroundColor: '#e74c3c',
-    color: '#fff',
-    border: 'none',
-    cursor: 'pointer',
-    borderRadius: '5px',
-    padding: '5px',
-  },
 };
 
-export default Items;
+export default ListView;

@@ -1,71 +1,58 @@
-import { createSlice } from '@reduxjs/toolkit';
-
-const initialState = {
-  categories: []
-};
-
-const shoppingListSlice = createSlice({
-  name: 'shoppingList',
-  initialState,
-  reducers: {
-    addCategory: (state, action) => {
-      const newCategory = {
-        id: Date.now(),
-        name: action.payload.name,
-        items: []
-      };
-      state.categories.push(newCategory);
-    },
-    deleteCategory: (state, action) => {
-      state.categories = state.categories.filter(
-        category => category.id !== action.payload
-      );
-    },
-    addItem: (state, action) => {
-      const category = state.categories.find(
-        category => category.id === action.payload.categoryId
-      );
-      const newItem = {
-        id: Date.now(),
-        name: action.payload.name,
-        quantity: action.payload.quantity || 1
-      };
-      category.items.push(newItem);
-    },
-    deleteItem: (state, action) => {
-      state.categories.forEach(category => {
-        category.items = category.items.filter(
-          item => item.id !== action.payload
-        );
-      });
-    },
-    // Add the updateCategory reducer
-    updateCategory: (state, action) => {
-      const category = state.categories.find(
-        category => category.id === action.payload.id
-      );
-      if (category) {
-        category.name = action.payload.name;
-      }
-    },
-    updateItem: (state, action) => {
-      state.categories.forEach(category => {
-        const item = category.items.find(item => item.id === action.payload.id);
-        if (item) {
-          item.name = action.payload.name;
-        }
-      });
-    }
-  }
-});
-
-export const {
-  addCategory,
-  deleteCategory,
-  addItem,
-  deleteItem,
-  updateCategory,  // Make sure to export the updateCategory action
-  updateItem
-} = shoppingListSlice.actions;
-
+// shoppingListSlice.js  
+import { createSlice } from '@reduxjs/toolkit';  
+  
+const initialState = {  
+  categories: JSON.parse(localStorage.getItem('categories')) || [],  
+  lists: JSON.parse(localStorage.getItem('lists')) || [],  
+};  
+  
+const shoppingListSlice = createSlice({  
+  name: 'shoppingList',  
+  initialState,  
+  reducers: {  
+   addCategory: (state, action) => {  
+    state.categories.push(action.payload);  
+    localStorage.setItem('categories', JSON.stringify(state.categories));  
+   },  
+   deleteCategory: (state, action) => {  
+    state.categories.splice(action.payload, 1);  
+    localStorage.setItem('categories', JSON.stringify(state.categories));  
+   },  
+   updateCategory: (state, action) => {  
+    const { index, newName } = action.payload;  
+    if (state.categories[index]) {  
+      state.categories[index] = newName;  
+    }  
+    localStorage.setItem('categories', JSON.stringify(state.categories));  
+   },  
+   addItem: (state, action) => {  
+    const { category, item } = action.payload;  
+    const list = state.lists.find((list) => list.category === category);  
+    if (list) {  
+      list.items.push(item);  
+    } else {  
+      state.lists.push({ category, items: [item] });  
+    }  
+    localStorage.setItem('lists', JSON.stringify(state.lists));  
+   },  
+   updateItem: (state, action) => {  
+    const { category, itemIndex, newItem } = action.payload;  
+    const list = state.lists.find((list) => list.category === category);  
+    if (list) {  
+      list.items[itemIndex] = newItem;  
+    }  
+    localStorage.setItem('lists', JSON.stringify(state.lists));  
+   },  
+   deleteItem: (state, action) => {  
+    const { category, itemIndex } = action.payload;  
+    const list = state.lists.find((list) => list.category === category);  
+    if (list) {  
+      list.items.splice(itemIndex, 1);  
+    }  
+    localStorage.setItem('lists', JSON.stringify(state.lists));  
+   },  
+  },  
+});  
+  
+export const { addCategory, deleteCategory, updateCategory, addItem, updateItem, deleteItem } = shoppingListSlice.actions;  
 export default shoppingListSlice.reducer;
