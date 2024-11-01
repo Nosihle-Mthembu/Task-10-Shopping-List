@@ -5,7 +5,7 @@ function Footer() {
     width: "100%",
     position: "relative",
     bottom: 0,
-    backgroundColor: "#333",
+    backgroundColor: "#3a6073",
     color: "white",
     display: "flex",
     alignItems: "center",

@@ -5,7 +5,7 @@ const  Navigate = () => {
   return (
     <>
       <nav style={{margin: 0,padding: 0}}>
-        <ul style={{listStyleType:"none", margin:0, padding:0, overflow:"hidden", backgroundColor:"#333"}}>
+        <ul style={{listStyleType:"none", margin:0, padding:0, overflow:"hidden", backgroundColor:"#3a6073"}}>
           <li style={{float:"right", display:"block", textAlign:"center", padding:"14px 16px", textDecoration:"none"}}>
             <Link to="/SignIn" style={{textDecoration:"none",  fontSize:"120%", color:"white"}}>Sign In</Link>
           </li>
