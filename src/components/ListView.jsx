@@ -3,101 +3,127 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItem, updateItem, deleteItem } from '../redux/shoppingListSlice';
 
 const ListView = memo(({ categoryName, onClose }) => {
-const dispatch = useDispatch();
-const [newItem, setNewItem] = useState('');
-const [editingIndex, setEditingIndex] = useState(null);
-const [editedItem, setEditedItem] = useState('');
-const items = useSelector((state) =>
-state.shoppingList.lists.find((list) => list.category === categoryName)?.items || []
-);
+  const dispatch = useDispatch();
+  const [newItem, setNewItem] = useState({ name: '', quantity: '', notes: '' });
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editedItem, setEditedItem] = useState({ name: '', quantity: '', notes: '' });
+  const items = useSelector((state) =>
+    state.shoppingList.lists.find((list) => list.category === categoryName)?.items || []
+  );
 
-const handleAddItem = () => {
-if (newItem.trim()) {
-try {
-dispatch(addItem({ category: categoryName, item: newItem.trim() }));
-setNewItem('');
-} catch (error) {
-console.error(error);
-}
-}
-};
+  const handleAddItem = () => {
+    if (newItem.name.trim()) {
+      try {
+        dispatch(addItem({ category: categoryName, item: { ...newItem } }));
+        setNewItem({ name: '', quantity: '', notes: '' });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
-const handleEditItem = (index) => {
-setEditingIndex(index);
-setEditedItem(items[index]);
-};
+  const handleEditItem = (index) => {
+    setEditingIndex(index);
+    setEditedItem(items[index]);
+  };
 
-const handleSaveItem = () => {
-if (editedItem.trim()) {
-try {
-dispatch(updateItem({ category: categoryName, itemIndex: editingIndex, newItem: editedItem.trim() }));
-setEditingIndex(null);
-setEditedItem('');
-} catch (error) {
-console.error(error);
-}
-}
-};
+  const handleSaveItem = () => {
+    if (editedItem.name.trim()) {
+      try {
+        dispatch(updateItem({ category: categoryName, itemIndex: editingIndex, newItem: editedItem }));
+        setEditingIndex(null);
+        setEditedItem({ name: '', quantity: '', notes: '' });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
 
-const handleDeleteItem = (index) => {
-try {
-dispatch(deleteItem({ category: categoryName, itemIndex: index }));
-} catch (error) {
-console.error(error);
-}
-};
+  const handleDeleteItem = (index) => {
+    try {
+      dispatch(deleteItem({ category: categoryName, itemIndex: index }));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-return (
-<div style={styles.container}>
-<div style={styles.header}>
-<h3>Items in {categoryName}</h3>
-<button onClick={onClose} style={styles.closeButton}>Close List</button>
-</div>
-<ul style={styles.itemList}>
-{items.map((item, index) => (
-<li key={index} style={styles.itemCard}>
-{editingIndex === index ? (
-<>
-<input
-type="text"
-value={editedItem}
-onChange={(e) => setEditedItem(e.target.value)}
-style={styles.input}
-/>
-<button onClick={handleSaveItem} style={styles.saveButton}>Save</button>
-</>
-) : (
-<>
-<span style={styles.itemText}>{item}</span>
-<button onClick={() => handleEditItem(index)} style={styles.editButton}>Edit</button>
-<button onClick={() => handleDeleteItem(index)} style={styles.deleteButton}>Delete</button>
-</>
-)}
-</li>
-))}
-</ul>
-<div style={styles.addItemContainer}>
-<input
-type="text"
-value={newItem}
-onChange={(e) => setNewItem(e.target.value)}
-placeholder="Add a new item"
-style={styles.input}
-/>
-<button onClick={handleAddItem} style={styles.addButton}>Add Item</button>
-</div>
-</div>
-);
+  return (
+    <div>
+      <div style={styles.header}>
+        <h3>Items in {categoryName}</h3>
+        <button onClick={onClose} style={styles.closeButton}>Close List</button>
+      </div>
+      <ul style={styles.itemList}>
+        {items.map((item, index) => (
+          <li key={index}>
+            {editingIndex === index ? (
+              <>
+                <input
+                  type="text"
+                  value={editedItem.name}
+                  onChange={(e) => setEditedItem({ ...editedItem, name: e.target.value })}
+                  placeholder="Name"
+                  style={styles.input}
+                />
+                <input
+                  type="text"
+                  value={editedItem.quantity}
+                  onChange={(e) => setEditedItem({ ...editedItem, quantity: e.target.value })}
+                  placeholder="Quantity"
+                  style={styles.input}
+                />
+                <input
+                  type="text"
+                  value={editedItem.notes}
+                  onChange={(e) => setEditedItem({ ...editedItem, notes: e.target.value })}
+                  placeholder="Notes (optional)"
+                  style={styles.input}
+                />
+                <button onClick={handleSaveItem} style={styles.saveButton}>Save</button>
+              </>
+            ) : (
+              <>
+                <span style={styles.itemText}><strong>{item.name}</strong> - {item.quantity}</span>
+                <p style={styles.notesText}>{item.notes}</p>
+                <button onClick={() => handleEditItem(index)} style={styles.editButton}>Edit</button>
+                <button onClick={() => handleDeleteItem(index)} style={styles.deleteButton}>Delete</button>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+      <div style={styles.addItemContainer}>
+        <input
+          type="text"
+          value={newItem.name}
+          onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
+          placeholder="Name"
+          style={styles.input}
+        />
+        <input
+          type="text"
+          value={newItem.quantity}
+          onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
+          placeholder="Quantity"
+          style={styles.input}
+        />
+        <input
+          type="text"
+          value={newItem.notes}
+          onChange={(e) => setNewItem({ ...newItem, notes: e.target.value })}
+          placeholder="Notes (optional)"
+          style={styles.input}
+        />
+        <button onClick={handleAddItem} style={styles.addButton}>Add Item</button>
+      </div>
+    </div>
+  );
 });
 
 const styles = {
-  container: {
-    padding: '20px',
-    backgroundColor: '#f2f2f2',
-    borderRadius: '8px',
-    width: '300px',
-    margin: 'auto',
-  },
+  notesText: { fontStyle: 'italic', color: '#777' },
+  
+
   header: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -159,6 +185,8 @@ const styles = {
   addItemContainer: {
     display: 'flex',
     marginTop: '10px',
+   flexDirection: 'column', 
+   gap: '5px',
   },
   input: {
     padding: '8px',
