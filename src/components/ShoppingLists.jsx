@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Categories from './CategoryList';
 import Items from './ListView';
 
+
 const ShoppingList = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 

@@ -55,7 +55,7 @@ const ListView = memo(({ categoryName, onClose }) => {
       </div>
       <ul style={styles.itemList}>
         {items.map((item, index) => (
-          <li key={index}>
+          <li key={index} style={styles.itemCard}>
             {editingIndex === index ? (
               <>
                 <input

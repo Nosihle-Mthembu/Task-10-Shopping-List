@@ -1,4 +1,3 @@
-// ParentComponent.js  
 import React, { useState } from 'react';  
 import ListView from './ListView';  
 import Categories from './Categories';  

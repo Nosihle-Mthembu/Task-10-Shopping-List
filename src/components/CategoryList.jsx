@@ -1,6 +1,6 @@
 import React, { useState, memo } from 'react';  
 import { useDispatch, useSelector } from 'react-redux';  
-import { addCategory, deleteCategory, updateCategory } from '../redux/shoppingListSlice';  
+import { addCategory, deleteCategory, updateCategory } from '../redux/shoppingListSlice';
 
 const Categories = memo(({ onCategoryClick }) => {  
   const dispatch = useDispatch();  
@@ -121,13 +121,13 @@ const styles = {
     padding: '20px',
     backgroundColor: '#f9f9f9',
     borderRadius: '8px',
-    display: 'flex',               // Flexbox for centering
-    flexDirection: 'column',       // Stack elements vertically
-    alignItems: 'center',          // Center items horizontally
-    justifyContent: 'center',      // Center items vertically
-    width: '100%',                 // Full width
-    maxWidth: '500px',             // Max width for better readability
-    margin: '0 auto',              // Center the component in its parent
+    display: 'flex',               
+    flexDirection: 'column',       
+    alignItems: 'center',          
+    justifyContent: 'center',      
+    width: '100%',                 
+    maxWidth: '500px',             
+    margin: '0 auto',              
   },
   input: {
     marginBottom: '10px',
